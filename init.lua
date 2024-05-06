@@ -44,6 +44,10 @@ end)
 
 local restore = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
+    if #closed_tabs == 0 then
+        return
+    end
+
     local tab = closed_tabs[#closed_tabs]
     table.remove(closed_tabs, #closed_tabs)
     state.closed_tabs = closed_tabs
