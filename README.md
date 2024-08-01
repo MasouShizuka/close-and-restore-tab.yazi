@@ -10,6 +10,12 @@ A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the functionality to c
 ## Installation
 
 ```sh
+ya pack -a MasouShizuka/close-and-restore-tab.yazi
+```
+
+or
+
+```sh
 # Windows
 git clone https://github.com/MasouShizuka/close-and-restore-tab.yazi.git %AppData%\yazi\config\plugins\close-and-restore-tab.yazi
 
