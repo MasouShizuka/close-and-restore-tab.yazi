@@ -30,17 +30,17 @@ Add this to your `keymap.toml`:
 ```toml
 [[manager.prepend_keymap]]
 on = [ "<C-w>" ]
-run = "plugin --sync close-and-restore-tab --args=close_to_left"
+run = "plugin close-and-restore-tab --args=close_to_left"
 desc = "Close the current tab and turn to left tab, or quit if it is last tab"
 
 [[manager.prepend_keymap]]
 on = [ "<C-w>" ]
-run = "plugin --sync close-and-restore-tab --args=close_to_right"
+run = "plugin close-and-restore-tab --args=close_to_right"
 desc = "Close the current tab and turn to right tab, or quit if it is last tab"
 
 [[manager.prepend_keymap]]
 on = [ "<C-t>" ]
-run = "plugin --sync close-and-restore-tab --args=restore"
+run = "plugin close-and-restore-tab --args=restore"
 desc = "Restore the closed tab"
 ```
 
