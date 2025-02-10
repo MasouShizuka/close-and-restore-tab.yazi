@@ -10,7 +10,7 @@ A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the functionality to c
 ## Installation
 
 ```sh
-ya pack -a MasouShizuka/close-and-restore-tab.yazi
+ya pack -a MasouShizuka/close-and-restore-tab
 ```
 
 or
@@ -30,17 +30,17 @@ Add this to your `keymap.toml`:
 ```toml
 [[manager.prepend_keymap]]
 on = [ "<C-w>" ]
-run = "plugin close-and-restore-tab --args=close_to_left"
+run = "plugin close-and-restore-tab close_to_left"
 desc = "Close the current tab and turn to left tab, or quit if it is last tab"
 
 [[manager.prepend_keymap]]
 on = [ "<C-w>" ]
-run = "plugin close-and-restore-tab --args=close_to_right"
+run = "plugin close-and-restore-tab close_to_right"
 desc = "Close the current tab and turn to right tab, or quit if it is last tab"
 
 [[manager.prepend_keymap]]
 on = [ "<C-t>" ]
-run = "plugin close-and-restore-tab --args=restore"
+run = "plugin close-and-restore-tab restore"
 desc = "Restore the closed tab"
 ```
 
