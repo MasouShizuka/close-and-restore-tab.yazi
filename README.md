@@ -10,7 +10,7 @@ A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the functionality to c
 ## Installation
 
 ```sh
-ya pack -a MasouShizuka/close-and-restore-tab
+ya pkg add MasouShizuka/close-and-restore-tab
 ```
 
 or

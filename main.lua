@@ -15,8 +15,8 @@ local _save_closed_tab = ya.sync(function(state)
 end)
 
 local _close_and_switch = ya.sync(function(state, idx)
-    ya.mgr_emit("close", {})
-    ya.mgr_emit("tab_switch", { idx })
+    ya.emit("close", {})
+    ya.emit("tab_switch", { idx })
 end)
 
 local close_to_left = ya.sync(function(state)
@@ -54,16 +54,16 @@ local restore = ya.sync(function(state)
 
     local idx = tab.idx
     if idx == 0 then
-        ya.mgr_emit("tab_switch", { 0 })
+        ya.emit("tab_switch", { 0 })
     else
-        ya.mgr_emit("tab_switch", { idx - 1 })
+        ya.emit("tab_switch", { idx - 1 })
     end
 
     -- TODO: add more tab properties to restore
-    ya.mgr_emit("tab_create", { tab.cwd })
+    ya.emit("tab_create", { tab.cwd })
 
     if idx == 0 then
-        ya.mgr_emit("tab_swap", { -1 })
+        ya.emit("tab_swap", { -1 })
     end
 end)
 
