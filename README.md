@@ -54,5 +54,9 @@ on = [ "<C-t>" ]
 run = "plugin close-and-restore-tab restore_session"
 desc = "Restores the tabs from last session"
 ```
-
 `close_to_left` and `close_to_right` respectively mean switching to the left/right tab after closing the tab. Please choose the one you like.
+
+If you want to run `restore_session` at startup you can add in `init.lua`:
+```lua
+require("close-and-restore-tab"):entry({ args = { "restore_session" } })
+```
