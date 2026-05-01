@@ -1,3 +1,7 @@
+--- @since 26.2.3
+
+-- Requires `key-close` event from https://github.com/sxyazi/yazi/commit/740d8919896542de18db0c5da5fb347a14459890.
+
 local _get_closed_tabs = ya.sync(function(state)
     return not state.closed_tabs and {} or state.closed_tabs
 end)
@@ -14,37 +18,10 @@ local _save_closed_tab = ya.sync(function(state)
     state.closed_tabs = closed_tabs
 end)
 
-local _close_and_switch = ya.sync(function(state, idx)
-    ya.emit("close", {})
-    ya.emit("tab_switch", { idx })
-end)
-
-local close_to_left = ya.sync(function(state)
-    local active_idx = tonumber(cx.tabs.idx) - 1
-    local target_idx = active_idx - 1
-    if active_idx == 0 then
-        target_idx = 0
-    end
-
-    _save_closed_tab()
-    _close_and_switch(target_idx)
-end)
-
-local close_to_right = ya.sync(function(state)
-    local total_tabs = #cx.tabs
-    local active_idx = tonumber(cx.tabs.idx) - 1
-    local target_idx = active_idx
-    if active_idx == total_tabs - 1 then
-        target_idx = total_tabs - 2
-    end
-
-    _save_closed_tab()
-    _close_and_switch(target_idx)
-end)
-
 local restore = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
     if #closed_tabs == 0 then
+        ya.info("No more tabs to restore")
         return
     end
 
@@ -68,21 +45,17 @@ local restore = ya.sync(function(state)
 end)
 
 return {
+    setup = function()
+        ps.sub("key-close", function(args)
+            if #cx.tabs ~= 1 then
+                _save_closed_tab()
+            end
+            return args
+        end)
+    end,
+
     entry = function(_, job)
         local action = job.args[1]
-        if not action then
-            return
-        end
-
-        if action == "close_to_left" then
-            close_to_left()
-            return
-        end
-
-        if action == "close_to_right" then
-            close_to_right()
-            return
-        end
 
         if action == "restore" then
             restore()
