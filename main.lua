@@ -3,7 +3,7 @@
 -- Requires `key-close` event from https://github.com/sxyazi/yazi/commit/740d8919896542de18db0c5da5fb347a14459890.
 
 local _get_closed_tabs = ya.sync(function(state)
-    return not state.closed_tabs and {} or state.closed_tabs
+    return state.closed_tabs or {}
 end)
 
 local _save_closed_tab = ya.sync(function(state)
