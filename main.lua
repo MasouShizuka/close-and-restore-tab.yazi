@@ -1,4 +1,4 @@
---- @since 26.2.3
+--- @since 26.5.1
 
 -- Requires `key-close` event from https://github.com/sxyazi/yazi/commit/740d8919896542de18db0c5da5fb347a14459890.
 
