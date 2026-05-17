@@ -10,10 +10,12 @@ local _save_closed_tab = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
 
     -- TODO: add more tab properties
-    closed_tabs[#closed_tabs + 1] = {
+    local tab = {
         idx = tonumber(cx.tabs.idx) - 1,
         cwd = tostring(cx.active.current.cwd),
     }
+    closed_tabs[#closed_tabs + 1] = tab
+    ya.dbg("Recorded closed tab", tab)
 
     state.closed_tabs = closed_tabs
 end)
@@ -30,6 +32,7 @@ local restore = ya.sync(function(state)
     end
 
     local tab = closed_tabs[#closed_tabs]
+    ya.dbg("Restoring tab", tab)
     table.remove(closed_tabs, #closed_tabs)
     state.closed_tabs = closed_tabs
 
