@@ -21,7 +21,11 @@ end)
 local restore = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
     if #closed_tabs == 0 then
-        ya.info("No more tabs to restore")
+        ya.notify {
+            title = "No tabs!",
+            content = "No more tabs to restore",
+            timeout = 4,
+        }
         return
     end
 
