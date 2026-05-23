@@ -1,54 +1,38 @@
+--- @since 26.5.1
+
+-- Requires `key-close` event from https://github.com/sxyazi/yazi/commit/740d8919896542de18db0c5da5fb347a14459890.
+
 local _get_closed_tabs = ya.sync(function(state)
-    return not state.closed_tabs and {} or state.closed_tabs
+    return state.closed_tabs or {}
 end)
 
 local _save_closed_tab = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
 
     -- TODO: add more tab properties
-    closed_tabs[#closed_tabs + 1] = {
+    local tab = {
         idx = tonumber(cx.tabs.idx) - 1,
         cwd = tostring(cx.active.current.cwd),
     }
+    closed_tabs[#closed_tabs + 1] = tab
+    ya.dbg("Recorded closed tab", tab)
 
     state.closed_tabs = closed_tabs
-end)
-
-local _close_and_switch = ya.sync(function(state, idx)
-    ya.emit("close", {})
-    ya.emit("tab_switch", { idx })
-end)
-
-local close_to_left = ya.sync(function(state)
-    local active_idx = tonumber(cx.tabs.idx) - 1
-    local target_idx = active_idx - 1
-    if active_idx == 0 then
-        target_idx = 0
-    end
-
-    _save_closed_tab()
-    _close_and_switch(target_idx)
-end)
-
-local close_to_right = ya.sync(function(state)
-    local total_tabs = #cx.tabs
-    local active_idx = tonumber(cx.tabs.idx) - 1
-    local target_idx = active_idx
-    if active_idx == total_tabs - 1 then
-        target_idx = total_tabs - 2
-    end
-
-    _save_closed_tab()
-    _close_and_switch(target_idx)
 end)
 
 local restore = ya.sync(function(state)
     local closed_tabs = _get_closed_tabs()
     if #closed_tabs == 0 then
+        ya.notify {
+            title = "No tabs!",
+            content = "No more tabs to restore",
+            timeout = 4,
+        }
         return
     end
 
     local tab = closed_tabs[#closed_tabs]
+    ya.dbg("Restoring tab", tab)
     table.remove(closed_tabs, #closed_tabs)
     state.closed_tabs = closed_tabs
 
@@ -68,21 +52,17 @@ local restore = ya.sync(function(state)
 end)
 
 return {
+    setup = function()
+        ps.sub("key-close", function(args)
+            if #cx.tabs ~= 1 then
+                _save_closed_tab()
+            end
+            return args
+        end)
+    end,
+
     entry = function(_, job)
         local action = job.args[1]
-        if not action then
-            return
-        end
-
-        if action == "close_to_left" then
-            close_to_left()
-            return
-        end
-
-        if action == "close_to_right" then
-            close_to_right()
-            return
-        end
 
         if action == "restore" then
             restore()
