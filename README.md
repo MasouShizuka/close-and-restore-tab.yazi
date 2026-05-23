@@ -25,6 +25,14 @@ git clone https://github.com/MasouShizuka/close-and-restore-tab.yazi.git ~/.conf
 
 ## Configuration
 
+Don't forget to add the plugin's `setup` function in Yazi's `init.lua`, i.e. `~/.config/yazi/init.lua`.
+
+```lua
+require("close-and-restore-tab"):setup()
+```
+
+## Keymap
+
 Add this to your `keymap.toml`:
 
 ```toml
@@ -41,5 +49,5 @@ which is bound to `<C-c>`:
 [[mgr.prepend_keymap]]
 on = "<C-w>"
 run = "close"
-desc = "Close the current tab, or quit if it is the last tab"
+desc = "Close the current tab, or quit if it's last"
 ```
