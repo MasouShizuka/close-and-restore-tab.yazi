@@ -11,11 +11,9 @@ A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the functionality to r
 
 ```sh
 ya pkg add MasouShizuka/close-and-restore-tab
-```
 
-or
+# or
 
-```sh
 # Windows
 git clone https://github.com/MasouShizuka/close-and-restore-tab.yazi.git %AppData%\yazi\config\plugins\close-and-restore-tab.yazi
 
@@ -23,9 +21,7 @@ git clone https://github.com/MasouShizuka/close-and-restore-tab.yazi.git %AppDat
 git clone https://github.com/MasouShizuka/close-and-restore-tab.yazi.git ~/.config/yazi/plugins/close-and-restore-tab.yazi
 ```
 
-## Configuration
-
-Don't forget to add the plugin's `setup` function in Yazi's `init.lua`, i.e. `~/.config/yazi/init.lua`.
+Then add the plugin's `setup` function in Yazi's `init.lua`, i.e. `~/.config/yazi/init.lua`.
 
 ```lua
 require("close-and-restore-tab"):setup()
